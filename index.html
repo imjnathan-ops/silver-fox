@@ -38,11 +38,71 @@ button:focus-visible,a:focus-visible,textarea:focus-visible,input:focus-visible,
 .top .menu{margin-left:auto;padding:12px 4px 12px 16px;color:var(--soft);font-size:16px}
 .view{display:none} .view.on{display:block}
 
-.ask{font-family:var(--serif);font-size:27px;line-height:1.25;margin:2px 0 16px}
-.door{display:block;width:100%;text-align:left;background:var(--raised);border-radius:18px;padding:18px 18px 18px 20px;margin-bottom:12px;border-left:8px solid;min-height:86px}
-.door b{display:block;font-family:var(--serif);font-weight:normal;font-size:23px;line-height:1.25}
-.door span{color:var(--soft);font-size:16px}
-.door.r{border-color:var(--lav)} .door.y{border-color:var(--amber)} .door.g{border-color:var(--sage)}
+.ask{font-family:var(--serif);font-weight:normal;font-size:28px;line-height:1.2;margin:2px 0 14px}
+/* home: three kinds of thing, three shapes. A question with three answers, one card for today, places to go. */
+.sec{font-size:14px;letter-spacing:.09em;text-transform:uppercase;color:var(--amber);margin:26px 0 10px;font-weight:600}
+.ic{flex:none;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%}
+.ic svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.doors{background:var(--raised);border-radius:22px;overflow:hidden;box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 10px 30px rgba(0,0,0,.25)}
+.door{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:18px 14px 18px 16px;min-height:88px;position:relative}
+.door+.door{border-top:1px solid var(--line)}
+.door>span:nth-child(2){flex:1}
+.door b{display:block;font-family:var(--serif);font-weight:normal;font-size:23px;line-height:1.2}
+.door small{display:block;color:var(--soft);font-size:16px;margin-top:3px;line-height:1.35}
+.door.r .ic{background:rgba(185,166,234,.16);color:var(--lav)} .door.y .ic{background:rgba(243,183,101,.15);color:var(--amber)} .door.g .ic{background:rgba(169,201,160,.15);color:var(--sage)}
+.door.r{padding-top:22px;padding-bottom:22px;background:linear-gradient(90deg,rgba(185,166,234,.10),transparent 70%)}
+.door:active,.tile:active,.focus:active,.slim:active{background-color:var(--raised2)}
+.focus{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--raised2);border-radius:18px;padding:16px 14px 16px 18px;min-height:72px;border:1px solid var(--line)}
+.focus>span:first-child{flex:1;min-width:0}
+.focus small{display:block;font-size:14px;color:var(--amber);margin-bottom:2px}
+.focus b{display:block;font-weight:600;font-size:18px;line-height:1.3}
+.focus.alert{border-color:var(--amber)}
+.bar{display:block;height:6px;border-radius:3px;background:rgba(255,255,255,.08);margin-top:10px;overflow:hidden}
+.bar span{display:block;height:100%;background:var(--sage);border-radius:3px;width:0}
+.basics{margin-top:12px}
+.basics-q{color:var(--soft);font-size:16px;margin:0 0 8px}
+.basics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.basics-row button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:64px;border-radius:14px;background:var(--raised);border:1px solid var(--line);color:var(--ink);font-size:15px;padding:6px 2px}
+.basics-row button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.basics-row button[aria-pressed=true]{border:1px solid var(--sage);background:rgba(169,201,160,.14);color:var(--ink)}
+.basics-row button[aria-pressed=true] svg{stroke:var(--sage)}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{display:flex;flex-direction:column;align-items:flex-start;text-align:left;background:var(--raised);border-radius:18px;padding:14px 14px 16px;min-height:128px}
+.tile .ic{width:40px;height:40px;margin-bottom:8px}
+.tile b{font-size:18px;font-weight:600;line-height:1.25}
+.tile small{color:var(--soft);font-size:15px;line-height:1.3;margin-top:3px;overflow-wrap:anywhere}
+.t-plan .ic{background:rgba(185,166,234,.14);color:var(--lav)}
+.t-story .ic{background:rgba(154,110,82,.25);color:#e2b896}
+.t-wins .ic{background:rgba(243,183,101,.14);color:var(--amber)}
+.t-va .ic{background:rgba(169,201,160,.14);color:var(--sage)}
+.slim{display:flex;align-items:center;gap:12px;width:100%;text-align:left;margin-top:10px;padding:8px 14px 8px 8px;min-height:60px;border-radius:16px;border:1px solid var(--line);color:var(--soft);font-size:17px}
+.slim span:nth-child(2){flex:1;color:var(--ink)}
+.slim .ic{width:40px;height:40px;color:var(--soft)}
+/* where she is, on the scared screen */
+.where{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 10px}
+.where button{min-height:48px;border-radius:14px;background:var(--raised2);font-size:17px}
+.where button[aria-pressed=true]{background:var(--act);color:var(--act-ink);box-shadow:inset 0 0 0 1px var(--act-edge)}
+.countrow{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.countrow .count{margin:0}
+.whereSw{min-height:44px;border-radius:999px;border:1px solid var(--line);color:var(--soft);font-size:15px;padding:6px 14px}
+.whereSw[aria-pressed=true]{border-color:var(--lav);color:var(--ink)}
+.textlink{display:block;margin:0 auto 8px;min-height:48px;padding:10px 20px;color:var(--soft);font-size:17px;text-decoration:underline;text-underline-offset:3px}
+.outnote{background:rgba(185,166,234,.10);border-radius:14px;padding:12px 14px;margin:0 0 12px;font-size:16px}
+.sound{display:flex;align-items:center;gap:10px;width:100%;min-height:52px;border-radius:14px;border:1px solid var(--line);padding:8px 14px;margin:0 0 12px;color:var(--soft);font-size:16px;text-align:left}
+.sound[aria-pressed=true]{border-color:var(--lav);color:var(--ink)}
+.sound svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.remember{border-left:4px solid var(--amber);background:var(--raised);border-radius:0 16px 16px 0;padding:14px 16px;margin:14px 0}
+.remember small{display:block;color:var(--amber);font-size:14px;margin-bottom:4px}
+.noticed{margin:0;padding:12px 0;border-top:1px solid var(--line);font-size:17px}
+.noticed:first-child{border-top:0;padding-top:0}
+.noticed:last-child{padding-bottom:0}
+.month{display:flex;justify-content:space-between;align-items:baseline;margin:22px 0 8px;font-size:15px;color:var(--amber);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+.month span:last-child{color:var(--faint);text-transform:none;letter-spacing:0;font-weight:normal}
+.win{background:var(--raised);border-radius:14px;padding:12px 14px;margin:0 0 8px}
+.win.auto{background:transparent;border:1px solid var(--line)}
+.saylist p{background:var(--raised2);border-radius:12px;padding:10px 14px;margin:0 0 8px}
+.num{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:56px;border-top:1px solid var(--line);padding:8px 0}
+.num a{flex:none;background:var(--raised2);border-radius:12px;padding:10px 14px;min-height:46px;display:flex;align-items:center}
 
 .row{display:flex;gap:10px;flex-wrap:wrap}
 .pill{background:var(--raised2);border-radius:999px;padding:10px 16px;min-height:46px;font-size:16px}
@@ -65,7 +125,7 @@ button:focus-visible,a:focus-visible,textarea:focus-visible,input:focus-visible,
 .nums button.on{background:var(--act);color:var(--act-ink);box-shadow:inset 0 0 0 1px var(--act-edge)}
 .scale{display:flex;justify-content:space-between;color:var(--faint);font-size:14px;margin-bottom:8px}
 
-.label{display:inline-block;font-size:14px;color:var(--sage);border:1px solid var(--line);border-radius:999px;padding:4px 12px;margin-bottom:12px}
+.label{display:block;font-size:15px;font-weight:600;letter-spacing:.04em;color:var(--sage);margin-bottom:8px}
 .count{color:var(--faint);font-size:15px;margin-bottom:4px}
 .step{font-family:var(--serif);font-size:29px;line-height:1.3;margin:14px 0 22px;min-height:170px}
 body.dim .step{font-size:31px}
@@ -124,17 +184,29 @@ details[open]>summary::after{content:"Close"}
 
 <!-- HOME -->
 <section class="view on" id="v-home">
-  <button class="banner" id="resume" data-act="resume" hidden><span><b>Continue where you were</b><br><small class="soft" id="resumeWhat"></small></span><span class="chev">›</span></button>
-  <p class="ask" id="ask">How are you right now?</p>
-  <button class="door r" data-go="red"><b>Scared or overwhelmed</b><span>Panicky, frozen, small, or about to cry.</span></button>
-  <button class="door y" data-go="yellow"><b>The wall is going up</b><span>Irritated, sharp, someone pushed a line.</span></button>
-  <button class="door g" data-go="green"><b>Steady</b><span>My fox baseline. Calm enough to think.</span></button>
-  <div style="height:12px"></div>
-  <button class="link plan" data-go="plan"><span>My safety plan<small id="homePlan">My signs, my people, my next steps</small></span><span class="chev">›</span></button>
-  <button class="link" data-go="writing"><span>My story<small id="homeWriting">Set this week's small step</small></span><span class="chev">›</span></button>
-  <button class="link" data-go="wins"><span>My wins<small id="homeWins">Write down something you did</small></span><span class="chev">›</span></button>
-  <button class="link" data-go="va"><span>My VA next step<small id="homeVA">Write the next step down</small></span><span class="chev">›</span></button>
-  <button class="link" data-go="talk"><span>Talk it through with Gemini<small>Copies how you're doing, so you don't have to explain</small></span><span class="chev">›</span></button>
+  <button class="banner" id="resume" data-act="resume" hidden><span><b>Continue:</b> <span class="soft" id="resumeWhat"></span></span><span class="chev">›</span></button>
+  <h1 class="ask" id="ask">How are you right now?</h1>
+  <div class="doors" role="group" aria-labelledby="ask">
+    <button class="door r" data-go="red"><i class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0M3 15c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg></i><span><b>Scared or overwhelmed</b><small>Panicky, frozen, small, or about to cry.</small></span><span class="chev" aria-hidden="true">›</span></button>
+    <button class="door y" data-go="yellow"><i class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 6h18v12H3zM3 10h18M3 14h18M9 6v4M15 6v4M6 10v4M12 10v4M18 10v4M9 14v4M15 14v4"/></svg></i><span><b>The wall is going up</b><small>Irritated, sharp, someone pushed a line.</small></span><span class="chev" aria-hidden="true">›</span></button>
+    <button class="door g" data-go="green"><i class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14zM5 19l7-7"/></svg></i><span><b>Steady</b><small>My fox baseline. Calm enough to think.</small></span><span class="chev" aria-hidden="true">›</span></button>
+  </div>
+
+  <p class="sec">Today</p>
+  <button class="focus" id="focus" data-act="focusGo"><span><small id="focusKind">This week</small><b id="focusText">Set one small step for your book</b><span class="bar" id="focusBarW" hidden><span id="focusBar"></span></span></span><span class="chev" aria-hidden="true">›</span></button>
+  <div class="basics" role="group" aria-label="Today's basics. Tap what you've done.">
+    <p class="basics-q">Today I've had…</p>
+    <div class="basics-row" id="basics"></div>
+  </div>
+
+  <p class="sec">My places</p>
+  <div class="tiles">
+    <button class="tile t-plan" data-go="plan"><i class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/></svg></i><b>Safety plan</b><small id="homePlan">Fill it in on a steady day</small></button>
+    <button class="tile t-story" data-go="writing"><i class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14"/></svg></i><b>My story</b><small id="homeWriting">Set this week's step</small></button>
+    <button class="tile t-wins" data-go="wins"><i class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg></i><b>My wins</b><small id="homeWins">Add your first one</small></button>
+    <button class="tile t-va" data-go="va"><i class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6h16v14H4zM4 10h16M8 3v5M16 3v5"/></svg></i><b>VA next step</b><small id="homeVA">Write it down</small></button>
+  </div>
+  <button class="slim" data-go="talk"><i class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg></i><span>Talk it through with Gemini</span><span class="chev" aria-hidden="true">›</span></button>
 </section>
 
 <!-- SCARED -->
@@ -146,7 +218,7 @@ details[open]>summary::after{content:"Close"}
     <div class="scale"><span>0 calm</span><span>10 the loudest it gets</span></div>
     <div id="redUrgent"></div>
     <button class="primary" data-act="redBegin">Start one small step</button>
-    <button class="quiet" data-go="home">Not now</button>
+    <button class="textlink" data-go="home">Not now</button>
     <p class="faint" id="red911">In danger right now? <a href="tel:911" style="text-decoration:underline">Call 911</a>.</p>
   </div>
   <div id="redTool" hidden></div>
@@ -163,7 +235,8 @@ details[open]>summary::after{content:"Close"}
   <div id="redRest" hidden>
     <h2>You can pause here.</h2>
     <p class="soft" id="redRestNote"></p>
-    <p>Water if you can. Something soft to hold. Big decisions can wait until you're steadier.</p>
+    <p>Water if you can, and something small to eat. Something soft to hold. Big decisions can wait until you're steadier.</p>
+    <div id="redRemember"></div>
     <button class="primary" data-go="home">Done</button>
   </div>
 </section>
@@ -275,6 +348,7 @@ details[open]>summary::after{content:"Close"}
   <p class="soft">Big or small. Cleaning one shelf counts. Saying no to someone draining counts.</p>
   <textarea id="winText" placeholder="Today I…"></textarea>
   <button class="primary" data-act="winSave">Add this win</button>
+  <p class="faint" id="winSum"></p>
   <div id="winList"></div>
 </section>
 
@@ -330,24 +404,48 @@ details[open]>summary::after{content:"Close"}
   <h2>My VA next step</h2>
   <p class="soft">Write it down while it's fresh. When memory blanks, this remembers. It saves by itself.</p>
   <label class="f" for="vaNext">The next step is</label>
-  <input type="text" id="vaNext" data-auto="va.next" placeholder="For example: call the coordinator back Tuesday">
+  <textarea id="vaNext" data-auto="va.next" rows="2" style="min-height:64px" placeholder="For example: call the coordinator back Tuesday"></textarea>
   <label class="f" for="vaWhen">Follow up by</label>
   <input type="date" id="vaWhen" data-auto="va.when">
-  <label class="f" for="vaNeed">Before an appointment: what I need, in plain words</label>
-  <textarea id="vaNeed" data-auto="va.need" placeholder="1. I want ongoing care for my triggers.  2. …"></textarea>
+  <a class="quiet" id="vaRemind" href="#" target="_blank" rel="noopener" hidden style="margin-top:10px">Put a reminder in my Google Calendar</a>
   <div class="card" style="margin-top:14px">
     <h3>If you're not sure what to say</h3>
-    <p class="soft">"My therapy ended a few months ago. I need help arranging ongoing care."</p>
+    <p class="soft">"I'm a veteran and I need help arranging ongoing care. What's the next step?"</p>
   </div>
   <div class="card">
-    <h3>If the answer is no, or it's taking forever</h3>
-    <p class="soft">That's a hard moment, not proof nothing works. Doors that are still open: your VA primary care provider can make a new mental health referral, you can ask about community care, or you can walk into a Vet Center without a referral.</p>
+    <h3>If it feels like they're deciding for you</h3>
+    <p class="soft">You're allowed to slow it down. Any of these is fine to say:</p>
+    <div class="saylist"><p>"Can you slow down and explain my options?"</p><p>"I'd like a minute to think before I decide."</p><p>"Can you write that down for me?"</p><p>"What happens if I say no?"</p><p>"I'd like to bring someone with me next time."</p></div>
   </div>
+  <details class="card"><summary>Notes for an appointment</summary>
+    <label class="f" for="vaNeed">Before: what I need, in plain words</label>
+    <textarea id="vaNeed" data-auto="va.need" placeholder="1. I want ongoing care.  2. …"></textarea>
+    <label class="f" for="vaSaid">After: what they said, and what happens next</label>
+    <textarea id="vaSaid" data-auto="va.said" placeholder="They said… The next step is… I need to call by…"></textarea>
+  </details>
+  <div class="card">
+    <h3>Numbers that can help</h3>
+    <div class="num"><span>VA health care line<br><small class="faint" id="vaHours">Mon to Fri, 8 am to 8 pm Eastern</small></span><a href="tel:8772228387">Call</a></div>
+    <div class="num"><span>Vet Center Call Center<br><small class="faint">Any time, day or night. Talk with another veteran.</small></span><a href="tel:8779278387">Call</a></div>
+    <p class="soft" style="margin:10px 0 0">You can also walk into any VA medical center and ask for mental health care, day or night.</p>
+  </div>
+  <details class="card"><summary>If the answer is no, or it's taking forever</summary>
+    <p class="soft" style="margin-top:10px">That's a hard moment, not proof nothing works. Doors that are still open: your VA primary care provider can make a new mental health referral, you can ask about community care, or you can call or visit a Vet Center.</p>
+  </details>
 </section>
 
 <section class="view" id="v-setup">
   <button class="back" data-go="more">‹ Back</button>
   <h2>Settings and backup</h2>
+  <div class="card">
+    <h3>Keep a copy</h3>
+    <p class="soft">Everything here lives only on this phone. If the phone is lost or reset, a copy is how you get it back. Save one about once a month.</p>
+    <button class="primary" data-act="backupShare" id="bShare" hidden>Send a copy to myself</button>
+    <button class="quiet" data-act="backup" id="bSave">Save a copy to my phone</button>
+    <label class="quiet" for="restoreFile" style="display:block;cursor:pointer">Bring back a saved copy</label>
+    <input type="file" id="restoreFile" accept="application/json,.json" hidden>
+    <p class="faint" id="sLast"></p>
+  </div>
   <div class="card">
     <h3>Text size</h3>
     <div class="row"><button class="pill" data-act="textNormal" id="tNorm" style="flex:1">Normal</button><button class="pill" data-act="textBig" id="tBig" style="flex:1">Bigger</button></div>
@@ -372,21 +470,13 @@ details[open]>summary::after{content:"Close"}
     <h3>Steps I put away</h3>
     <div id="hList"></div>
   </div>
-  <div class="card">
-    <h3>Keep a copy</h3>
-    <p class="soft">Everything here lives only on this phone. Save a copy about once a month.</p>
-    <button class="quiet" data-act="backup">Save a copy to my phone</button>
-    <label class="quiet" for="restoreFile" style="display:block;cursor:pointer">Bring back a saved copy</label>
-    <input type="file" id="restoreFile" accept="application/json,.json" hidden>
-    <p class="faint" id="sLast"></p>
-  </div>
 </section>
 
 </main>
 
 <nav class="help" aria-label="Help now">
   <div>
-    <a id="callFirst" href="#" hidden><b id="callFirstL">Call</b>my person</a>
+    <a id="callFirst" href="#" hidden><b id="callFirstL">Call</b><span id="callFirstS">my person</span></a>
     <a href="tel:988" aria-label="Call the Veterans Crisis Line: dial 988, then press 1"><b>Call 988, press 1</b>Crisis line</a>
     <a href="sms:838255" aria-label="Text the Veterans Crisis Line at 838255"><b>Text 838255</b>Crisis line</a>
   </div>
@@ -403,13 +493,13 @@ var TKEY="kit.tailor";
 var T=(function(){var t={};try{var h=location.hash;if(h.indexOf("#t=")===0){var b=h.slice(3).replace(/-/g,"+").replace(/_/g,"/");while(b.length%4)b+="=";t=JSON.parse(decodeURIComponent(escape(atob(b))));try{localStorage.setItem(TKEY,JSON.stringify(t));}catch(e){}history.replaceState(null,"",location.pathname+location.search);}else{t=JSON.parse(localStorage.getItem(TKEY)||"{}")||{};}}catch(e){t={};}return t;})();
 if(T.wall){var yh=document.getElementById("yHead");if(yh)yh.textContent="You call this "+T.wall+". It's trying to protect you. Let's make room to choose what happens next.";}
 var TOOLS={
-  t333:{name:"3-3-3 reset",for:["red","yellow","green"],boost:[],steps:["If you can, pause. Notice it: “This is my alarm going off.”","Name 3 things you can see.","Name 3 things you can touch. Your pendant, your plushie, your blanket.","Move 3 parts of your body. Wiggle your fingers. Roll your shoulders. Press your feet down.","@words"]},
+  t333:{name:"3-3-3 reset",for:["red","yellow","green"],boost:[],steps:["If you can, pause. Notice it: “This is my alarm going off.”","Name 3 things you can see.","@touch","Move 3 parts of your body. Wiggle your fingers. Roll your shoulders. Press your feet down.","@words"]},
   sigh:{name:"Long sigh breathing",breath:true,for:["red","yellow","green"],boost:[],steps:[]},
-  quiet:{name:"Make it quiet",for:["red"],boost:["Weighted blanket","Dim lights","Nature sounds","Plushies"],steps:["Lower the lights, or turn the screen dimmer.","Get your weighted blanket or something soft to hold.","Put on quiet nature sounds, low, if that helps.","Just stay here. Nothing has to be fixed this minute."]},
-  cold:{name:"Something cool",for:["red","yellow"],boost:["Cold water"],steps:["Run cool water over your hands and wrists, or hold a cool cloth.","Notice the coolness for ten slow breaths.","Notice how you feel. It doesn't have to change yet."]},
+  quiet:{name:"Make it quiet",home:true,sound:true,for:["red"],boost:["Weighted blanket","Dim lights","Nature sounds","Plushies"],steps:["Lower the lights, or turn the screen dimmer.","Get a blanket or something soft to hold.","Turn on the soft rain sound below, or quiet nature sounds, low.","Just stay here. Nothing has to be fixed this minute."]},
+  cold:{name:"Something cool",for:["red","yellow"],boost:["Cold water"],steps:["Run cool water over your hands and wrists, or hold something cold, like a drink.","Notice the coolness for ten slow breaths.","Notice how you feel. It doesn't have to change yet."]},
   count:{name:"Count things",for:["red","yellow"],boost:[],steps:["Pick something to count. Windows, blue things, light posts.","Count them slowly, out loud or in your head.","Pick another thing and count again.","Notice: your mind followed you. You're steering."]},
-  pendant:{name:"Hold your pendant",for:["red","yellow"],boost:["My grounding pendant","Plushies"],steps:["Hold your pendant or your plushie.","Feel its weight. Its edges. Its temperature.","Find 3 small details you've never noticed on it.","Say: “I have my anchor. I'm here.”"]},
-  pet:{name:"Be with my pets",for:["red","yellow","green"],boost:["My pets"],steps:["Go to one of your pets.","Sit close. Watch them breathe.","Notice how soft, warm or calm they are.","Stay as long as you like."]},
+  pendant:{name:"Hold something steady",for:["red","yellow"],boost:["@grounding","Plushies"],steps:["Hold your grounding object, or anything you keep close.","Feel its weight. Its edges. Its temperature.","Find 3 small details you've never noticed on it.","Say: “I have my anchor. I'm here.”"]},
+  pet:{name:"Be with my pets",home:true,for:["red","yellow","green"],boost:["My pets"],steps:["Go to one of your pets.","Sit close. Watch them breathe.","Notice how soft, warm or calm they are.","Stay as long as you like."]},
   away:{name:"Step away",for:["yellow"],boost:[],steps:["If it's safe to, step away. Another room, or outside.","If you need words: “I need a minute. I'll come back to this.”","Three slow breaths, longer out than in.","Unclench your jaw. Drop your shoulders."]},
   ghost:{name:T.ghostName||"Then-or-now check",for:["yellow"],boost:[],steps:["Ask: is this happening now, or is an old memory opening?","Who is actually here? What is actually being said?","What's different today from back then? What can I do now that I couldn't then?","Say: “My mind is reacting to "+(T.ghost||"something old")+". I can check what's happening now.”"]},
   move:{name:"Move it out",for:["yellow","green"],boost:["Video games","Being outside at night"],steps:["Stand up and stretch, arms high.","Walk. Outside if you can, even to the mailbox.","Or play one round of a game.","Come back when the heat has gone down."]}
@@ -434,7 +524,7 @@ var PLAN=[
 function blank(){return{name:"Silver Fox",me:"",introDone:false,first:{label:"",phone:""},log:[],wins:[],notes:[],hidden:[],custom:[],plan:{},
   writing:{title:"",goal:"Finish my book and self-publish it on Kindle",stage:"",step:"",base:"",sessions:[],road:[]},
   about:{anchors:"",triggers:"",words:"",parts:"",goals:""},chosen:{anchors:[]},
-  va:{next:"Waiting on the VA's decision about a referral for trigger and desensitization work",when:"",need:""},
+  va:{next:"Waiting to hear back from the VA about my next step",when:"",need:"",said:""},basics:{},
   lastBackup:null,lastQ:-1,lastQDay:"",big:false,doing:null};}
 function load(){try{var r=localStorage.getItem(KEY);if(r){var d=JSON.parse(r);var b=blank();Object.keys(b).forEach(function(k){if(d[k]==null)d[k]=b[k];else if(typeof b[k]==="object"&&!Array.isArray(b[k])&&b[k])d[k]=Object.assign({},b[k],d[k]);});return d;}}catch(e){}return blank();}
 var S=load(),saveOK=true;
@@ -466,9 +556,9 @@ function urgentBox(){return'<div class="urgent"><b>If you might hurt yourself, r
 /* ---------- which steps work for her ---------- */
 function mergeCustom(){(S.custom||[]).forEach(function(c){TOOLS[c.id]={name:c.name,for:c.for,steps:c.steps,boost:[]};c.for.forEach(function(st){if(DEFAULT_ORDER[st].indexOf(c.id)<0)DEFAULT_ORDER[st].splice(1,0,c.id)});});}
 function stats(){var st={};S.log.forEach(function(e){if(e.tool&&e.before!=null&&e.after!=null){var s=st[e.tool]||(st[e.tool]={n:0,drop:0,lower:0});s.n++;s.drop+=e.before-e.after;if(e.after<e.before)s.lower++;}});return st;}
-function ranked(state){var st=stats(),likes=S.chosen.anchors||[];
-  return DEFAULT_ORDER[state].filter(function(id){return TOOLS[id]&&S.hidden.indexOf(id)<0&&(id!=="pet"||likes.indexOf("My pets")>=0)}).map(function(id,i){var s=st[id],t=TOOLS[id];
-    var boost=(t.boost||[]).some(function(b){return likes.indexOf(b)>=0})?0.6:0;
+function ranked(state,out){var st=stats(),likes=S.chosen.anchors||[];
+  return DEFAULT_ORDER[state].filter(function(id){return TOOLS[id]&&S.hidden.indexOf(id)<0&&(id!=="pet"||likes.indexOf("My pets")>=0)&&!(out&&TOOLS[id].home)}).map(function(id,i){var s=st[id],t=TOOLS[id];
+    var boost=(t.boost||[]).some(function(b){return b==="@grounding"?likes.some(function(l){return/grounding/i.test(l)}):likes.indexOf(b)>=0})?0.6:0;
     var score=(s&&s.n>=2)?(s.drop/s.n)+0.5:(2-i*0.25+boost);
     return{id:id,score:score,n:s?s.n:0,lower:s?s.lower:0};}).sort(function(a,b){return b.score-a.score});}
 function noteFor(t){return t.lower>=2?"Your number was lower after this "+t.lower+" times.":"";}
@@ -476,12 +566,16 @@ function noteFor(t){return t.lower>=2?"Your number was lower after this "+t.lowe
 /* ---------- running a step ---------- */
 var breathT=null;
 function stopTimers(){clearTimeout(breathT);breathT=null;}
+var TOUCH={"Plushies":"your plushie","Weighted blanket":"your blanket","My pets":"your pet"};
+function touchLine(){var likes=S.chosen.anchors||[],mine=[];likes.forEach(function(l){if(/grounding/i.test(l))mine.push("your grounding object");else if(TOUCH[l])mine.push(TOUCH[l]);});
+  if(red.out||!mine.length)return"Name 3 things you can touch. Your sleeve, your seat, your phone in your hand.";return"Name 3 things you can touch. "+mine.slice(0,3).join(", ").replace(/^./,function(c){return c.toUpperCase()})+".";}
 function wordsLine(){var w=(S.about.words||"").split("\n").map(function(x){return x.trim()}).filter(Boolean);return"Say: “"+(w[0]||"I'm here. This will pass.")+"”";}
 function runTool(slot,id,h){/* h: {onDone, onOther, note, at} */
   var t=TOOLS[id],el=$(slot),i=h.at||0,last=0;
   if(t.breath)return runBreath(slot,h);
-  function draw(){var txt=t.steps[i]==="@words"?wordsLine():t.steps[i];
-    el.innerHTML='<span class="label">'+esc(t.name)+'</span>'+(h.note?'<p class="faint">'+esc(h.note)+'</p>':'')+'<p class="count">Step '+(i+1)+' of '+t.steps.length+'</p><p class="step">'+esc(txt)+'</p>'
+  function draw(){var txt=t.steps[i]==="@words"?wordsLine():t.steps[i]==="@touch"?touchLine():t.steps[i];
+    el.innerHTML='<span class="label">'+esc(t.name)+'</span>'+(h.note?'<p class="faint">'+esc(h.note)+'</p>':'')+'<div class="countrow"><p class="count">Step '+(i+1)+' of '+t.steps.length+'</p>'+(h.where?'<button class="whereSw" data-k="where" aria-pressed="'+(red.out?"true":"false")+'">'+(red.out?"✓ Out somewhere":"I'm out somewhere")+'</button>':'')+'</div>'+(h.where&&red.out?'<p class="outnote">Quiet steps only. Find a quieter spot if you can, like your car.</p>':'')+'<p class="step">'+esc(txt)+'</p>'
+      +(t.sound?'<button class="sound" data-act="sound" aria-pressed="'+(snd?"true":"false")+'"><svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></svg><span>'+(snd?"Rain sound is on. Tap to stop.":"Play a soft rain sound")+'</span></button>':'')
       +'<button class="primary" data-k="next">'+(i<t.steps.length-1?"Next":"I did it")+'</button>'
       +'<div class="minor">'+(i>0?'<button data-k="prev">‹ Previous</button>':'')+'<button data-k="other">Try something else</button>'+(h.allowHide?'<button data-k="hide">Not for me</button>':'')+'</div>';
     S.doing={v:cur,tool:id,i:i,t:Date.now()};save();
@@ -489,6 +583,7 @@ function runTool(slot,id,h){/* h: {onDone, onOther, note, at} */
       if(k==="next"){if(i<t.steps.length-1){i++;draw();}else{S.doing=null;save();h.onDone();}}
       if(k==="prev"&&i>0){i--;draw();}
       if(k==="other"){S.doing=null;save();h.onOther();}
+      if(k==="where"){red.out=!red.out;S.lastOut=red.out;save();if(red.out&&t.home){S.doing=null;h.onOther();}else draw();return;}
       if(k==="hide"){if(S.hidden.indexOf(id)<0)S.hidden.push(id);S.doing=null;save();toast("Put away. You can bring it back in Settings.");h.onOther();}
     });});}
   draw();}
@@ -504,32 +599,56 @@ function runBreath(slot,h){var el=$(slot),n=0;var still=window.matchMedia&&match
 /* ---------- moving between screens ---------- */
 var cur="home",ACT={};
 window.addEventListener("popstate",function(e){go((e.state&&e.state.v)||"home",true);});
-function go(v,fromBack){stopTimers();
+function go(v,fromBack){stopTimers();if(snd&&v!=="red"&&v!=="yellow"&&v!=="practice"){soundOff();drawSound();}
   if(!fromBack&&v!==cur){try{history.pushState({v:v},"","#"+v)}catch(e){}}cur=v;
   document.querySelectorAll(".view").forEach(function(x){x.classList.toggle("on",x.id==="v-"+v)});
   document.body.classList.toggle("dim",v==="red");window.scrollTo(0,0);
   var f={home:drawHome,red:startRed,yellow:startYellow,green:startGreen,writing:drawWriting,wins:drawWins,talk:drawTalk,patterns:drawPatterns,about:drawAbout,va:drawVA,setup:drawSetup,plan:drawPlan}[v];if(f)f();}
 document.addEventListener("click",function(e){var b=e.target.closest("[data-go]");if(b){e.preventDefault();go(b.getAttribute("data-go"));return;}var a=e.target.closest("[data-act]");if(a){e.preventDefault();ACT[a.getAttribute("data-act")]();}});
 
+var BASICS=[["ate","Food",'<path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M16 3c-2 1-3 4-3 7h3v11"/>'],["water","Water",'<path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/>'],["slept","Sleep",'<path d="M20 14A8 8 0 1 1 10 4a6 6 0 0 0 10 10z"/>'],["outside","Outside",'<path d="M12 4v2M12 18v2M4 12h2M18 12h2M6.3 6.3l1.4 1.4M16.3 16.3l1.4 1.4M6.3 17.7l1.4-1.4M16.3 7.7l1.4-1.4"/><circle cx="12" cy="12" r="3.5"/>']];
+function dayKey(t){var d=t?new Date(t):new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
+function fmtDay(iso){var d=new Date(iso+"T12:00:00");return d.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})}
+function daysUntil(iso){var d=new Date(iso+"T00:00:00"),n=new Date();n.setHours(0,0,0,0);return Math.round((d-n)/864e5)}
+function wordsThisWeek(){var wk=Date.now()-7*864e5,n=0;S.writing.sessions.forEach(function(x){if(x.t>wk)n+=x.words||0});return n}
+var focusTo="writing";
 function drawHome(){
   $("kitName").textContent=S.name||"Silver Fox";document.title=S.name||"Silver Fox";
   $("ask").textContent="How are you right now"+(S.me?", "+S.me:"")+"?";
-  $("homeWriting").textContent=S.writing.step?("This week: "+S.writing.step):"Set this week's small step";
-  $("homeWins").textContent=S.wins.length?("Last: "+S.wins[S.wins.length-1].text.slice(0,52)):"Write down something you did";
-  $("homeVA").textContent=S.va.next?(S.va.next.slice(0,60)+(S.va.next.length>60?"…":"")):"Write the next step down";
+  /* today: the one most useful thing, in this order */
+  var f=$("focus"),k="This week",t="",bar=null,alert=false,hasData=S.log.length+S.wins.length>3,since=S.lastBackup?Date.now()-S.lastBackup:Infinity;
+  var due=S.va.when?daysUntil(S.va.when):null;
+  if(due!=null&&due<=3){focusTo="va";alert=true;k="VA next step";t=(due<0?"Was due "+fmtDay(S.va.when):due===0?"Due today":"Due "+fmtDay(S.va.when))+": "+(S.va.next||"follow up");}
+  else if(hasData&&since>30*864e5){focusTo="setup";k="Keep your things safe";t=S.lastBackup?"It's been a month. Save a fresh copy.":"Save a copy, in case the phone is lost or reset.";}
+  else if(S.writing.step){focusTo="writing";var w=wordsThisWeek();t=S.writing.step;k="This week's step for your book"+(w?" · "+w.toLocaleString()+" words so far":"");}
+  else{focusTo="writing";t="Set one small step for your book";}
+  f.classList.toggle("alert",alert);$("focusKind").textContent=k;$("focusText").textContent=t;
+  var m=/(\d[\d,]*)\s*words/i.exec(S.writing.step||"");
+  if(focusTo==="writing"&&m){var goal=parseInt(m[1].replace(/,/g,""),10),have=wordsThisWeek();if(goal>0){$("focusBarW").hidden=false;$("focusBar").style.width=Math.min(100,Math.round(have/goal*100))+"%";}}else $("focusBarW").hidden=true;
+  /* basics */
+  var today_=S.basics[dayKey()]||[];
+  $("basics").innerHTML=BASICS.map(function(x){var on=today_.indexOf(x[0])>=0;return'<button data-basic="'+x[0]+'" aria-pressed="'+on+'"><svg viewBox="0 0 24 24" aria-hidden="true">'+(on?'<path d="M5 12.5l4.5 4.5L19 7"/>':x[2])+'</svg>'+x[1]+'</button>'}).join("");
+  $("basics").querySelectorAll("[data-basic]").forEach(function(b){b.onclick=function(){var d=dayKey(),a=S.basics[d]||(S.basics[d]=[]),v=b.getAttribute("data-basic"),i=a.indexOf(v);if(i<0)a.push(v);else a.splice(i,1);save();drawHome();};});
+  /* places */
+  var wk=Date.now()-7*864e5,ww=wordsThisWeek();
+  $("homeWriting").textContent=ww?ww.toLocaleString()+" words this week":(S.writing.step?"Step set for this week":"Set this week's step");
+  var nw=S.wins.length,mw=S.wins.filter(function(x){return x.t>Date.now()-30*864e5}).length;
+  $("homeWins").textContent=nw?(mw+" this month · "+nw+" in all"):"Add your first one";
+  $("homeVA").textContent=focusTo==="va"?"Details and numbers":S.va.when?("Follow up by "+fmtDay(S.va.when)):(S.va.next?"Next step written down":"Write it down");
   var filled=PLAN.filter(function(p){return(S.plan[p[0]]||"").trim()}).length;
-  $("homePlan").textContent=filled?("Ready when you need it ("+filled+" of "+PLAN.length+" parts filled in)"):"Fill it in on a steady day";
-  var cf=$("callFirst");if(S.first.phone){cf.hidden=false;cf.href="tel:"+S.first.phone.replace(/[^0-9+]/g,"");$("callFirstL").textContent="Call "+(S.first.label||"");}else cf.hidden=true;
+  $("homePlan").textContent=filled?(filled===PLAN.length?"Ready when you need it":filled+" of "+PLAN.length+" parts filled in"):"Fill it in on a steady day";
+  var cf=$("callFirst");cf.hidden=false;if(S.first.phone){cf.href="tel:"+S.first.phone.replace(/[^0-9+]/g,"");cf.removeAttribute("data-go");$("callFirstL").textContent="Call "+(S.first.label||"");$("callFirstS").textContent="my person";}else{cf.href="#";cf.setAttribute("data-go","setup");$("callFirstL").textContent="Add";$("callFirstS").textContent="your person";}
   var d=S.doing,rs=$("resume");if(d&&TOOLS[d.tool]&&Date.now()-d.t<30*60000&&(d.v==="red"||d.v==="yellow")){rs.hidden=false;$("resumeWhat").textContent=TOOLS[d.tool].name+", step "+(d.i+1);}else rs.hidden=true;}
+ACT.focusGo=function(){go(focusTo)};
 ACT.resume=function(){var d=S.doing;if(!d)return;go(d.v);if(d.v==="red"){$("redStart").hidden=true;red.tool=d.tool;red.tried=[d.tool];showRedTool(d.tool,d.i);}else{$("yStart").hidden=true;yTool=d.tool;$("yTool").hidden=false;runTool("yTool",d.tool,yHandlers(d.i));}};
 
 /* ---------- scared ---------- */
-var red={tried:[],tool:null};
-function startRed(){red={tried:[],tool:null};clearNums(["redBefore","redAfterN"]);$("redUrgent").innerHTML="";$("red911").hidden=false;$("redStart").hidden=false;["redTool","redAfter","redRest"].forEach(function(x){$(x).hidden=true});}
-function pickRed(){var list=ranked("red").filter(function(t){return red.tried.indexOf(t.id)<0});if(!list.length){red.tried=[];list=ranked("red");}return list[0];}
+var red={tried:[],tool:null,out:false};
+function startRed(){red={tried:[],tool:null,out:!!S.lastOut};clearNums(["redBefore","redAfterN"]);$("redUrgent").innerHTML="";$("red911").hidden=false;$("redStart").hidden=false;["redTool","redAfter","redRest"].forEach(function(x){$(x).hidden=true});}
+function pickRed(){var list=ranked("red",red.out).filter(function(t){return red.tried.indexOf(t.id)<0});if(!list.length){red.tried=[];list=ranked("red",red.out);}return list[0];}
 function showRedTool(id,at){$("redAfter").hidden=true;$("redTool").hidden=false;window.scrollTo(0,0);
   var t=ranked("red").filter(function(x){return x.id===id})[0]||{lower:0};
-  runTool("redTool",id,{at:at,note:noteFor(t),onDone:function(){$("redTool").hidden=true;clearNums(["redAfterN"]);afterNote();$("redAfter").hidden=false;window.scrollTo(0,0);},onOther:function(){nextRed();}});}
+  runTool("redTool",id,{at:at,where:true,note:noteFor(t),onDone:function(){$("redTool").hidden=true;clearNums(["redAfterN"]);afterNote();$("redAfter").hidden=false;window.scrollTo(0,0);},onOther:function(){nextRed();}});}
 function nextRed(){var t=pickRed();if(!t)return;red.tool=t.id;red.tried.push(t.id);$("redStart").hidden=true;showRedTool(t.id,0);}
 function afterNote(){var a=picked.redAfterN,b=picked.redBefore,h="";
   if(a>=9)h=urgentBox();else if(a!=null&&b!=null&&a>=b)h='<p class="soft" style="margin-top:10px">Still loud. That happens. You can try something else, reach someone, or stop here.</p>';
@@ -537,9 +656,22 @@ function afterNote(){var a=picked.redAfterN,b=picked.redBefore,h="";
 ACT.redBegin=function(){nextRed()};
 ACT.redAnother=function(){logTool("red",red.tool,picked.redBefore,picked.redAfterN);if(picked.redAfterN!=null)picked.redBefore=picked.redAfterN;clearNums(["redAfterN"]);nextRed();};
 ACT.redFinish=function(){var b=picked.redBefore,a=picked.redAfterN;logTool("red",red.tool,b,a);$("redAfter").hidden=true;$("redRest").hidden=false;window.scrollTo(0,0);
-  $("redRestNote").innerHTML=(a>=9)?urgentBox():((b!=null&&a!=null&&b>a)?"You went from "+b+" to "+a+".":"");};
+  $("redRestNote").innerHTML=(a>=9)?urgentBox():((b!=null&&a!=null&&b>a)?"You went from "+b+" to "+a+".":"");
+  $("redRemember").innerHTML=a>=9?"":rememberWin();};
+/* one of her own wins, from before today: proof she has handled hard things */
+function rememberWin(){var cut=Date.now()-864e5,own=S.wins.filter(function(w){return w.t<cut&&!w.auto}),any=S.wins.filter(function(w){return w.t<cut});var pool=own.length?own:any;if(!pool.length)return"";
+  var w=pool[Math.floor(Math.random()*pool.length)];return'<div class="remember"><small>Something you did, '+esc(new Date(w.t).toLocaleDateString(undefined,{month:"long",day:"numeric"}))+'</small>'+esc(w.text)+'</div>';}
+/* soft rain: made on the phone, so it works without internet. Only ever starts on her tap. */
+var snd=null;
+function soundOn(){try{var C=window.AudioContext||window.webkitAudioContext;if(!C)return false;var ctx=new C(),len=ctx.sampleRate*4,buf=ctx.createBuffer(2,len,ctx.sampleRate);
+  for(var ch=0;ch<2;ch++){var d=buf.getChannelData(ch),last=0;for(var i=0;i<len;i++){var w=Math.random()*2-1;last=(last+0.02*w)/1.02;d[i]=last*3.2;}}
+  var src=ctx.createBufferSource();src.buffer=buf;src.loop=true;var lp=ctx.createBiquadFilter();lp.type="lowpass";lp.frequency.value=900;var g=ctx.createGain();g.gain.value=0;
+  src.connect(lp);lp.connect(g);g.connect(ctx.destination);src.start();g.gain.linearRampToValueAtTime(0.5,ctx.currentTime+2.5);snd={ctx:ctx,g:g};return true;}catch(e){return false;}}
+function soundOff(){if(!snd)return;var s_=snd;snd=null;try{s_.g.gain.linearRampToValueAtTime(0,s_.ctx.currentTime+1.2);setTimeout(function(){s_.ctx.close()},1400);}catch(e){}}
+function drawSound(){document.querySelectorAll('[data-act="sound"]').forEach(function(b){b.setAttribute("aria-pressed",snd?"true":"false");b.querySelector("span").textContent=snd?"Rain sound is on. Tap to stop.":"Play a soft rain sound";});}
+ACT.sound=function(){if(snd)soundOff();else if(!soundOn())toast("This phone wouldn't play it. Nature sounds on YouTube work too.");drawSound();};
 function logTool(state,tool,before,after,extra){var e=Object.assign({t:Date.now(),state:state,tool:tool,before:before==null?null:before,after:after==null?null:after},extra||{});S.log.push(e);
-  if(before!=null&&after!=null&&before-after>=2&&TOOLS[tool])S.wins.push({t:Date.now(),text:"Came down from "+before+" to "+after+" with "+TOOLS[tool].name+".",auto:true});save();}
+  if(before!=null&&after!=null&&before-after>=2&&TOOLS[tool])S.wins.push({t:Date.now(),text:"You came down from "+before+" to "+after+" with "+TOOLS[tool].name+".",auto:true});save();}
 
 /* ---------- the wall ---------- */
 var yPicked=[],yTool=null,ySay="";
@@ -575,7 +707,7 @@ function drawWriting(){var w=S.writing;$("wStage").innerHTML=["Still drafting","
   var wkCh=0;w.sessions.forEach(function(s){if(s.t>wk)wkCh+=s.chapters||0});
   $("wWeek").textContent=ed?("This week: "+wkCh+(wkCh===1?" chapter":" chapters")+" revised."):("This week: "+week.toLocaleString()+" words."+(base?" The book is at about "+(base+all).toLocaleString()+" words.":""));
   $("wRoad").innerHTML=ROAD.map(function(r,i){var on=w.road.indexOf(i)>=0;return'<button class="link" style="background:var(--raised2)" data-road="'+i+'"><span>'+(on?"✓ ":"")+esc(r)+'<small>'+esc(ROAD_HELP[i])+'</small></span><span class="faint">'+(on?"done":"tap when done")+'</span></button>'}).join("");
-  $("wRoad").querySelectorAll("[data-road]").forEach(function(b){b.addEventListener("click",function(){var i=+b.getAttribute("data-road"),k=w.road.indexOf(i);if(k<0){w.road.push(i);S.wins.push({t:Date.now(),text:"Book: "+ROAD[i]+".",auto:true});}else w.road.splice(k,1);save();drawWriting();$("wRoad").parentNode.open=true;})});}
+  $("wRoad").querySelectorAll("[data-road]").forEach(function(b){b.addEventListener("click",function(){var i=+b.getAttribute("data-road"),k=w.road.indexOf(i);if(k<0){w.road.push(i);S.wins.push({t:Date.now(),text:"You did a step on the road to Kindle: "+ROAD[i].charAt(0).toLowerCase()+ROAD[i].slice(1)+".",auto:true});}else w.road.splice(k,1);save();drawWriting();$("wRoad").parentNode.open=true;})});}
 ["wStep","wTitle","wGoal","wBase"].forEach(function(id){$(id).addEventListener("input",function(){var k={wStep:"step",wTitle:"title",wGoal:"goal",wBase:"base"}[id];S.writing[k]=$(id).value;clearTimeout(autoT);autoT=setTimeout(save,400);});});
 var spT=null,spEnd=0;
 function spStart(min){clearInterval(spT);spEnd=Date.now()+min*60000;$("spClock").hidden=false;$("spBtns").hidden=true;$("spStop").hidden=false;$("spText").textContent="Phone face down, one scene, no fixing. Just keep going.";
@@ -587,28 +719,47 @@ ACT.wLog=function(){var n=parseInt($("wWords").value,10)||0,note=$("wNote").valu
 
 /* ---------- wins ---------- */
 var lastRemoved=null;
-function drawWins(){$("winList").innerHTML=(lastRemoved?'<button class="banner" id="undoWin"><span>Win removed</span><b>Undo</b></button>':'')+(S.wins.slice().reverse().slice(0,40).map(function(w){return'<div class="card"><p style="margin:0">'+esc(w.text)+'</p><p class="faint" style="margin:6px 0 0;display:flex;justify-content:space-between;align-items:center"><span>'+new Date(w.t).toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})+'</span><button class="faint" data-winx="'+w.t+'" style="padding:10px 0 10px 18px">Remove</button></p></div>'}).join("")||'<p class="faint">Your wins will show here, newest first.</p>');
+function drawWins(){var all=S.wins.slice().sort(function(a,b){return b.t-a.t}),h=lastRemoved?'<button class="banner" id="undoWin"><span>Win removed</span><b>Undo</b></button>':'',month="";
+  var mine=all.filter(function(w){return!w.auto}).length;
+  $("winSum").textContent=all.length?(all.length+(all.length===1?" win":" wins")+" so far"+(all.length-mine?", "+(all.length-mine)+" of them added by Silver Fox when you logged your book or came down from a hard moment.":".")):"";
+  all.forEach(function(w){var d=new Date(w.t),m=d.toLocaleDateString(undefined,{month:"long",year:"numeric"});
+    if(m!==month){month=m;var n=all.filter(function(x){var e=new Date(x.t);return e.getMonth()===d.getMonth()&&e.getFullYear()===d.getFullYear()}).length;h+='<p class="month"><span>'+esc(m)+'</span><span>'+n+(n===1?" win":" wins")+'</span></p>';}
+    h+='<div class="win'+(w.auto?" auto":"")+'">'+(w.auto?'<p class="faint" style="margin:0 0 2px">Added for you</p>':'')+'<p style="margin:0">'+esc(w.text)+'</p><p class="faint" style="margin:4px 0 0;display:flex;justify-content:space-between;align-items:center"><span>'+d.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})+'</span><button class="faint" data-winx="'+w.t+'" style="padding:10px 0 10px 18px;min-height:44px">Remove</button></p></div>';});
+  $("winList").innerHTML=h||'<p class="faint">Your wins will show here, newest first.</p>';
   $("winList").querySelectorAll("[data-winx]").forEach(function(b){b.onclick=function(){var t=+b.getAttribute("data-winx");lastRemoved=S.wins.filter(function(w){return w.t===t})[0];S.wins=S.wins.filter(function(w){return w.t!==t});save();drawWins();}});
   if(lastRemoved)$("undoWin").onclick=function(){S.wins.push(lastRemoved);S.wins.sort(function(a,b){return a.t-b.t});lastRemoved=null;save();drawWins();};}
 ACT.winSave=function(){var t=$("winText").value.trim();if(!t){toast("Write a few words first.");return;}lastRemoved=null;S.wins.push({t:Date.now(),text:t});$("winText").value="";drawWins();said("Added. That counts.");};
 
 /* ---------- patterns ---------- */
-function drawPatterns(){var since=Date.now()-30*864e5,L=S.log.filter(function(e){return e.t>since&&!e.practice});
-  if(!L.length){$("patOut").innerHTML='<p class="soft">Nothing yet. Each time you give a number before and after a step, Silver Fox learns what helps you.</p>';return;}
-  var c={green:0,yellow:0,red:0};L.forEach(function(e){c[e.state]=(c[e.state]||0)+1});
-  var h='<div class="card"><h3>Check-ins in the last 30 days</h3><p class="stat"><span>Scared or overwhelmed</span><span>'+c.red+'</span></p><p class="stat"><span>Wall going up</span><span>'+c.yellow+'</span></p><p class="stat"><span>Steady</span><span>'+c.green+'</span></p></div>';
+function times(n){return n===1?"once":n===2?"twice":n+" times"}
+function listWords(a){return a.length<2?a.join(""):a.slice(0,-1).join(", ")+" and "+a[a.length-1]}
+function drawPatterns(){var since=Date.now()-30*864e5,L=S.log.filter(function(e){return e.t>since&&!e.practice}),out=[];
   var st=stats(),ids=Object.keys(st).filter(function(k){return TOOLS[k]});
-  var two=ids.filter(function(k){return st[k].n>=2}).sort(function(a,b){return st[b].drop/st[b].n-st[a].drop/st[a].n}),once=ids.filter(function(k){return st[k].n<2});
-  if(two.length)h+='<div class="card"><h3>Steps you have rated twice or more</h3>'+two.map(function(k){var s=st[k];return'<p class="stat"><span>'+esc(TOOLS[k].name)+'</span><span>lower after it '+s.lower+' of '+s.n+' times</span></p>'}).join("")+'</div>';
-  if(once.length)h+='<div class="card"><h3>Tried once so far</h3><p class="soft" style="margin:0">'+once.map(function(k){return esc(TOOLS[k].name)}).join(", ")+'.</p></div>';
-  var trig={};L.forEach(function(e){(e.triggers||[]).forEach(function(t){trig[t]=(trig[t]||0)+1})});var tk=Object.keys(trig).sort(function(a,b){return trig[b]-trig[a]});
-  if(tk.length)h+='<div class="card"><h3>What set the wall off most</h3>'+tk.slice(0,5).map(function(t){return'<p class="stat"><span>'+esc(t)+'</span><span>'+trig[t]+'</span></p>'}).join("")+'</div>';
-  $("patOut").innerHTML=h;}
+  ids.filter(function(k){return st[k].n>=2&&st[k].lower>0}).sort(function(a,b){return st[b].lower/st[b].n-st[a].lower/st[a].n}).slice(0,3).forEach(function(k){var x=st[k];
+    out.push(x.lower===x.n?TOOLS[k].name+" brought your number down every time you tried it ("+times(x.n)+").":TOOLS[k].name+" brought your number down "+x.lower+" of the "+x.n+" times you tried it.");});
+  var once=ids.filter(function(k){return st[k].n<2}).map(function(k){return TOOLS[k].name});
+  if(once.length)out.push("You've tried "+listWords(once)+" once. "+(once.length===1?"It's":"They're")+" there if you want "+(once.length===1?"it":"them")+" again.");
+  var c={red:0,yellow:0,green:0};L.forEach(function(e){c[e.state]=(c[e.state]||0)+1});var parts=[];
+  if(c.green)parts.push("steady "+times(c.green));if(c.yellow)parts.push("the wall going up "+times(c.yellow));if(c.red)parts.push("scared or overwhelmed "+times(c.red));
+  if(parts.length)out.push("In the last 30 days you checked in as "+listWords(parts)+".");
+  var trig={};L.forEach(function(e){(e.triggers||[]).forEach(function(t){trig[t]=(trig[t]||0)+1})});var tk=Object.keys(trig).sort(function(a,b){return trig[b]-trig[a]}).slice(0,3);
+  if(tk.length)out.push("What set the wall off most: "+listWords(tk.map(function(t){return t.toLowerCase()+" ("+times(trig[t])+")"}))+".");
+  var bw=basicsWeek();if(bw)out.push(bw);
+  $("patOut").innerHTML=out.length?'<div class="card">'+out.map(function(x){return'<p class="noticed">'+esc(x)+'</p>'}).join("")+'</div>':'<p class="soft">Nothing yet. Each time you give a number before and after a step, Silver Fox learns what helps you.</p>';}
+function basicsWeek(){var days=[];for(var i=0;i<7;i++){var k=dayKey(Date.now()-i*864e5);if(S.basics[k]&&S.basics[k].length)days.push(S.basics[k]);}var n=days.length;if(!n)return"";
+  var got=BASICS.map(function(x){return[x[1].toLowerCase(),days.filter(function(d){return d.indexOf(x[0])>=0}).length]}).filter(function(x){return x[1]>0});
+  return"This week you tapped the basics on "+n+(n===1?" day":" days")+". You had "+listWords(got.map(function(x){return x[0]+(x[1]===n?(n===1?" that day":" every one of them"):" on "+x[1])}))+".";}
 
 /* ---------- about, VA ---------- */
 function drawAbout(){fillAuto($("v-about"));
   $("aNotes").innerHTML=S.notes.length?'<h2 style="margin-top:22px">Things I\'ve said</h2>'+S.notes.slice().reverse().slice(0,20).map(function(n){return'<div class="card"><p class="faint" style="margin:0 0 4px">'+esc(n.q)+'</p><p style="margin:0">'+esc(n.a)+'</p></div>'}).join(""):"";}
-function drawVA(){fillAuto($("v-va"));}
+function drawVA(){fillAuto($("v-va"));remindLink();vaHours();}
+/* the line keeps Eastern hours; say them in her own time so she doesn't have to work it out */
+function vaHours(){try{var now=new Date(),et=new Date(now.toLocaleString("en-US",{timeZone:"America/New_York"})),diff=Math.round((now-et)/36e5);if(!diff)return;
+  var f=function(h){h=(h+24)%24;return(h%12||12)+(h<12?" am":" pm")};$("vaHours").textContent="Mon to Fri, "+f(8+diff)+" to "+f(20+diff)+" your time";}catch(e){}}
+function remindLink(){var a=$("vaRemind"),d=S.va.when;if(!d){a.hidden=true;return;}var x=d.replace(/-/g,""),e=new Date(d+"T12:00:00");e.setDate(e.getDate()+1);var y=e.getFullYear()+String(e.getMonth()+1).padStart(2,"0")+String(e.getDate()).padStart(2,"0");
+  a.href="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent("VA follow-up")+"&dates="+x+"/"+y+"&details="+encodeURIComponent(S.va.next||"");a.hidden=false;}
+$("vaWhen").addEventListener("change",function(){setTimeout(remindLink,450)});
 
 /* ---------- talking with Gemini ---------- */
 function lastState(){var e=S.log.filter(function(x){return!x.practice}).slice(-1)[0];if(!e)return"";var name={green:"steady",yellow:"the wall going up",red:"scared or overwhelmed"}[e.state];var mins=Math.round((Date.now()-e.t)/60000);
@@ -636,10 +787,14 @@ function drawSetup(){fillAuto($("v-setup"));$("tBig").classList.toggle("on",!!S.
   $("cList").querySelectorAll("[data-del]").forEach(function(b){b.onclick=function(){if(!confirm("Remove this step?"))return;var c=S.custom.splice(+b.getAttribute("data-del"),1)[0];delete TOOLS[c.id];Object.keys(DEFAULT_ORDER).forEach(function(k){var i=DEFAULT_ORDER[k].indexOf(c.id);if(i>=0)DEFAULT_ORDER[k].splice(i,1)});save();drawSetup();}});
   $("hiddenCard").hidden=!S.hidden.length;$("hList").innerHTML=S.hidden.filter(function(id){return TOOLS[id]}).map(function(id){return'<p class="stat"><span>'+esc(TOOLS[id].name)+'</span><button class="pill" data-unhide="'+id+'">Bring back</button></p>'}).join("");
   $("hList").querySelectorAll("[data-unhide]").forEach(function(b){b.onclick=function(){S.hidden=S.hidden.filter(function(x){return x!==b.getAttribute("data-unhide")});save();drawSetup();}});
+  var sh=canShareFile();$("bShare").hidden=!sh;$("bSave").className=sh?"quiet":"primary";$("bSave").textContent=sh?"Or save it to this phone's Downloads":"Save a copy to my phone";
   $("sLast").textContent=S.lastBackup?("Last copy saved "+new Date(S.lastBackup).toLocaleDateString()):"No copy saved yet.";}
 ACT.textBig=function(){S.big=true;save();document.body.classList.add("big");drawSetup();};
 ACT.textNormal=function(){S.big=false;save();document.body.classList.remove("big");drawSetup();};
 ACT.cAdd=function(){var n=$("cName").value.trim(),st=$("cSteps").value.split("\n").map(function(x){return x.trim()}).filter(Boolean);if(!n||!st.length){toast("Give it a name and at least one step.");return;}if(!cFor.length)cFor=["red","yellow","green"];var c={id:"c"+Date.now(),name:n,steps:st,for:cFor.slice()};S.custom.push(c);mergeCustom();$("cName").value="";$("cSteps").value="";drawSetup();said("Added. Silver Fox will offer it.");};
+function backupFile(){return new File([JSON.stringify(S,null,1)],(S.name||"Silver Fox")+" copy "+new Date().toISOString().slice(0,10)+".json",{type:"application/json"});}
+function canShareFile(){try{return!!(navigator.canShare&&navigator.canShare({files:[backupFile()]}));}catch(e){return false;}}
+ACT.backupShare=function(){var prev=S.lastBackup;S.lastBackup=Date.now();save();navigator.share({files:[backupFile()],title:"My Silver Fox copy"}).then(function(){drawSetup();toast("Sent. Keep it somewhere you'll find it.");},function(){S.lastBackup=prev;save();drawSetup();});};
 ACT.backup=function(){S.lastBackup=Date.now();save();var blob=new Blob([JSON.stringify(S,null,1)],{type:"application/json"});var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=(S.name||"Silver Fox")+" copy "+new Date().toISOString().slice(0,10)+".json";document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},1500);drawSetup();toast("Download started. It goes to your Downloads folder.");};
 $("restoreFile").addEventListener("change",function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){var d;try{d=JSON.parse(r.result);}catch(x){d=null;}
   if(!d||typeof d.about!=="object"||!Array.isArray(d.log)){toast("That file isn't a Silver Fox copy.");e.target.value="";return;}
@@ -648,7 +803,7 @@ $("restoreFile").addEventListener("change",function(e){var f=e.target.files[0];i
 
 /* ---------- first open ---------- */
 var CH={
- anchors:["My grounding pendant","Plushies","Weighted blanket","Dim lights","Cold water","Nature sounds","Being outside at night","Music","Anime or dramas","Reading","Writing","Cooking","My pets","Video games"],
+ anchors:["A grounding object","Plushies","Weighted blanket","Dim lights","Cold water","Nature sounds","Being outside at night","Music","Anime or dramas","Reading","Writing","Cooking","My pets","Video games"],
  triggers:T.triggers||["Loud noises","Sudden crashes","Yelling","Sirens","Feeling trapped","Disrespect","Being blamed","Pain","Heavy tiredness","Crowds"],
  words:T.words||["I'm here. This will pass.","I've handled this before. This wave will go down.","My mind is reacting to something old.","Other people's storms belong to them.","It's okay not to be okay."],
  stage:["Still drafting","First draft done","Editing","Formatting","Almost ready to publish"]};
@@ -693,6 +848,7 @@ function keepIntro(k){var other=$("iOther")?$("iOther").value.trim():"";var list
 mergeCustom();
 if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost")){navigator.serviceWorker.register("sw.js").catch(function(){});}
 if(S.big)document.body.classList.add("big");
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
 try{history.replaceState({v:"home"},"","#home")}catch(e){}
 drawHome();
 if(!S.introDone){document.querySelectorAll(".view").forEach(function(x){x.classList.remove("on")});$("v-intro").classList.add("on");cur="intro";drawIntro();}
