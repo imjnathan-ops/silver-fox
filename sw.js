@@ -1,6 +1,6 @@
 // Silver Fox opens from the saved copy straight away, even on a weak signal,
 // and quietly fetches any newer version for next time.
-const CACHE = "silver-fox-v4";
+const CACHE = "silver-fox-v5";
 const FILES = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 self.addEventListener("install", (e) => { self.skipWaiting(); e.waitUntil(caches.open(CACHE).then((c) => c.addAll(FILES))); });
 self.addEventListener("activate", (e) => e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== CACHE).map((k) => caches.delete(k))))));

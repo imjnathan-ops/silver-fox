@@ -501,7 +501,7 @@ details[open]>summary::after{content:"Close"}
   <button class="primary" data-act="bCopy">2. Copy my request</button>
   <a class="quiet" href="https://chatgpt.com/" target="_blank" rel="noopener">3. Open ChatGPT</a>
   <a class="quiet" href="https://gemini.google.com/app" target="_blank" rel="noopener">or open Gemini</a>
-  <p class="soft">Paste your request there and send it. When it has finished writing, copy its whole answer: look for Copy under the answer, or tap the three dots there. Silver Fox finds the code inside.</p>
+  <p class="soft">You can also open the ChatGPT app yourself from your phone's Home Screen. Paste your request there and send it. When it has finished writing, copy its whole answer: look for Copy under the answer, or tap the three dots there. Silver Fox finds the code inside.</p>
   <label class="f bstep" for="bCode">4. Paste its answer here</label>
   <textarea id="bCode" placeholder="Press and hold here, then Paste" style="font-size:14px"></textarea>
   <button class="primary" data-act="bAdd" id="bAddBtn">Add this tool</button>
@@ -577,7 +577,7 @@ function blank(){return{name:"Silver Fox",me:"",introDone:false,first:{label:"",
   writing:{title:"",goal:"Finish my book and self-publish it on Kindle",stage:"",step:"",base:"",sessions:[],road:[]},
   about:{anchors:"",triggers:"",words:"",parts:"",goals:""},chosen:{anchors:[]},
   va:{next:"Waiting to hear back from the VA about my next step",when:"",need:"",said:""},basics:{},
-  lastBackup:null,lastQ:-1,lastQDay:"",big:false,doing:null,tools:[],toolData:{},toolDraft:null};}
+  lastBackup:null,lastQ:-1,lastQDay:"",big:false,doing:null,tools:[],toolData:{},toolLS:{},toolDraft:null};}
 function load(){try{var r=localStorage.getItem(KEY);if(r){var d=JSON.parse(r);var b=blank();Object.keys(b).forEach(function(k){if(d[k]==null)d[k]=b[k];else if(typeof b[k]==="object"&&!Array.isArray(b[k])&&b[k])d[k]=Object.assign({},b[k],d[k]);});return d;}}catch(e){}return blank();}
 var S=load(),saveOK=true;
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));saveOK=true;}catch(e){saveOK=false;toast("This phone wouldn't save that. Use Settings, then Save a copy.");}return saveOK;}
@@ -858,6 +858,8 @@ var BUILD_RULES=["I use a phone app called Silver Fox that lets me add my own to
 "  fox.today() gives today's date as YYYY-MM-DD in my own time zone. Use it for dates instead of toISOString.",
 "- Keep everything the tool remembers in one object, for example: var data = fox.load({ entries: [] }); and call fox.save(data) after every change.",
 "- Don't use localStorage, sessionStorage, cookies, IndexedDB or any other storage.",
+"- If I ask for a lock or password, make it a simple lock screen with a hint I write myself. Don't encrypt my entries, so a forgotten password never loses them.",
+"- If I ask for pictures, shrink each one to at most 800 pixels on its longest side and save it as a JPEG data URL, because the phone has limited room.",
 "","PRIVATE AND OFFLINE",
 "- It must work with no internet. Load nothing from the web: no outside scripts, fonts, images or frameworks. Plain JavaScript and CSS inside the one file.",
 "- Never send what I write anywhere. No fetch, no forms that submit, no tracking.",
@@ -896,6 +898,7 @@ function pickCode(txt){var best="",re=/```[a-zA-Z]*\s*\n([\s\S]*?)```/g,m;while(
 function tagText(code,re){var m=code.match(re);if(!m)return"";var d=document.createElement("textarea");d.innerHTML=m[1];return d.value.trim().slice(0,160);}
 ACT.bAdd=function(){var raw=$("bCode").value,code=pickCode(raw),d=draft(),msg=$("bMsg");
   if(!/<(script|body|div|form|main|section|h1|h2|button|input|textarea)/i.test(code)){msg.hidden=false;msg.textContent=raw.trim()?"That doesn't look like a tool yet. Go back to ChatGPT, tap Copy on the code it wrote, and paste again. If it's still writing, wait until it finishes.":"Paste ChatGPT's answer in box 4 first.";return;}
+  if(/<html|<!doctype/i.test(code)&&!/<\/html>/i.test(code)&&!/<\/script>\s*$/i.test(code)){msg.hidden=false;msg.textContent="ChatGPT's answer looks cut off before the end. Ask it: Please send the complete file again in one code block. Then copy and paste the new answer.";return;}
   var name=tagText(code,/<title[^>]*>([\s\S]*?)<\/title>/i)||($("bWant").value.trim().split(/[.\n]/)[0]||"My tool").slice(0,40),
       about=tagText(code,/<meta\s+name=["']description["']\s+content=["']([^"']*)["']/i);
   var t=d.edit?toolById(d.edit):null;
@@ -908,6 +911,8 @@ window.__fox=function(id){return{
   save:function(v){S.toolData[id]=v===undefined?null:JSON.parse(JSON.stringify(v));return save();},
   today:function(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");},
   err:function(m){if(cur!=="tool"||id!==toolId)return;toolErrMsg=String(m).slice(0,600);$("toolErr").hidden=false;},
+  lsGet:function(){return Object.assign({},(S.toolLS||{})[id]||{});},
+  lsSet:function(o){if(!S.toolLS)S.toolLS={};S.toolLS[id]=o;return save();},
   height:function(px){var f=$("toolFrame");if(f&&px>0)f.style.height=Math.min(px+24,30000)+"px";}};};
 var TOOL_CSS=":root{--ground:#20131a;--raised:#33212a;--raised2:#402b34;--line:#5a3d47;--ink:#f7ebdc;--soft:#d6c3cf;--faint:#c4b0bf;--act:#93264c;--act-ink:#fff4ea;--act-edge:#d0577f;--sage:#a9c9a0;--wood:#9a6e52;--amber:#f3b765;--lav:#b9a6ea;--rose:#e0708f}"+
  "*{box-sizing:border-box}html,body{margin:0;background:transparent!important;color:var(--ink);font:17px/1.5 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;-webkit-text-size-adjust:100%}body{padding:2px 1px 20px}"+
@@ -919,6 +924,8 @@ var TOOL_CSS=":root{--ground:#20131a;--raised:#33212a;--raised2:#402b34;--line:#
  "table{border-collapse:collapse;width:100%}th,td{padding:6px;border-bottom:1px solid var(--line);text-align:left}";
 function toolDoc(t){
   var head="<meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><style>"+TOOL_CSS+"</style><script>(function(){var F=parent.__fox(\""+t.id+"\");window.fox={load:F.load,save:F.save,today:F.today};"+
+    "function mk(keep){var d=keep?F.lsGet():{};function w(){if(keep)F.lsSet(d);}return{getItem:function(k){k=String(k);return Object.prototype.hasOwnProperty.call(d,k)?d[k]:null;},setItem:function(k,v){d[String(k)]=String(v);w();},removeItem:function(k){delete d[String(k)];w();},clear:function(){d={};w();},key:function(i){return Object.keys(d)[i]||null;},get length(){return Object.keys(d).length;}};}"+
+    "try{Object.defineProperty(window,\"localStorage\",{value:mk(true),configurable:true});Object.defineProperty(window,\"sessionStorage\",{value:mk(false),configurable:true});}catch(e){}"+
     "window.onerror=function(m,s,l){F.err(m+(l?\" (line \"+l+\")\":\"\"));};window.addEventListener(\"unhandledrejection\",function(e){F.err(String(e.reason));});"+
     "var last=0;function h(){var n=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0);if(n!==last){last=n;F.height(n);}}"+
     "addEventListener(\"load\",h);setInterval(h,600);})();<\/script>",code=t.code;
