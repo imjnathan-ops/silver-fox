@@ -162,6 +162,20 @@ details[open]>summary::after{content:"Close"}
 .urgent{background:#30202f;border:1px solid var(--lav);border-radius:16px;padding:16px;margin:12px 0}
 .urgent a{text-decoration:underline}
 .toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--ink);color:var(--ground);padding:10px 16px;border-radius:12px;font-size:16px;display:none;z-index:6;max-width:90vw}
+/* my tools: things she builds with ChatGPT or Gemini, each one its own little page */
+.tbtn{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--raised);border-radius:16px;padding:12px 14px 12px 10px;margin-bottom:10px;min-height:66px;border-left:4px solid var(--sage)}
+.tbtn .ic{width:40px;height:40px;background:rgba(169,201,160,.15);color:var(--sage)}
+.tbtn>span:nth-child(2){flex:1;min-width:0}
+.tbtn b{display:block;font-weight:600;font-size:18px;line-height:1.25}
+.tbtn small{display:block;color:var(--soft);font-size:15px;line-height:1.3;margin-top:2px}
+.tbtn:active{background-color:var(--raised2)}
+.tools-empty{color:var(--soft);font-size:16px;margin:0 0 10px}
+.bstep{font-weight:600;font-size:17px;color:var(--ink);margin:20px 0 6px}
+.toolbar{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.toolbar .back{margin:0}
+.toolbar .chg{margin-left:auto;color:var(--soft);padding:12px 0 12px 12px;font-size:16px;min-height:48px}
+#toolFrame{display:block;width:100%;border:0;min-height:60vh;background:transparent}
+.warn{border:1px solid var(--amber)}
 </style>
 </head>
 <body>
@@ -207,6 +221,12 @@ details[open]>summary::after{content:"Close"}
     <button class="tile t-va" data-go="va"><i class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6h16v14H4zM4 10h16M8 3v5M16 3v5"/></svg></i><b>VA next step</b><small id="homeVA">Write it down</small></button>
   </div>
   <button class="slim" data-go="talk"><i class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg></i><span>Talk it through with Gemini</span><span class="chev" aria-hidden="true">›</span></button>
+
+  <p class="sec">My tools</p>
+  <button class="banner" id="toolResume" data-act="toolResume" hidden><span><b>Continue:</b> <span class="soft" id="toolResumeWhat">adding your new tool</span></span><span class="chev">›</span></button>
+  <div id="toolList"></div>
+  <button class="slim" data-act="buildNew"><i class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></i><span>Make a new tool</span><span class="chev" aria-hidden="true">›</span></button>
+  
 </section>
 
 <!-- SCARED -->
@@ -472,6 +492,38 @@ details[open]>summary::after{content:"Close"}
   </div>
 </section>
 
+<section class="view" id="v-build">
+  <button class="back" data-go="home">‹ Home</button>
+  <h2 id="bHead">Make a new tool</h2>
+  <p class="soft" id="bLead">Tell ChatGPT or Gemini what you want. It writes the tool, and you paste it here. What you write in your tools stays on this phone. ChatGPT only sees what you ask it to make.</p>
+  <label class="f bstep" for="bWant" id="bWantL">1. What do you want it to do?</label>
+  <textarea id="bWant" placeholder="For example: a private journal. Each entry has the date, a title and what happened."></textarea>
+  <button class="primary" data-act="bCopy">2. Copy my request</button>
+  <a class="quiet" href="https://chatgpt.com/" target="_blank" rel="noopener">3. Open ChatGPT</a>
+  <a class="quiet" href="https://gemini.google.com/app" target="_blank" rel="noopener">or open Gemini</a>
+  <p class="soft">Paste your request there and send it. When it has finished writing, copy its whole answer: look for Copy under the answer, or tap the three dots there. Silver Fox finds the code inside.</p>
+  <label class="f bstep" for="bCode">4. Paste its answer here</label>
+  <textarea id="bCode" placeholder="Press and hold here, then Paste" style="font-size:14px"></textarea>
+  <button class="primary" data-act="bAdd" id="bAddBtn">Add this tool</button>
+  <p class="soft" id="bMsg" hidden></p>
+  <div class="card" id="awayCard" hidden><h3>Tools I put away</h3><div id="awayList"></div></div>
+</section>
+
+<section class="view" id="v-tool">
+  <div class="toolbar"><button class="back" data-go="home">‹ Home</button><button class="chg" data-act="toolChange">Change this tool</button></div>
+  <div class="card warn" id="toolErr" hidden>
+    <h3>Part of this tool isn't working</h3>
+    <p class="soft">Your saved entries are safe. ChatGPT can usually fix this in one try.</p>
+    <button class="primary" data-act="toolFix">Ask ChatGPT to fix it</button>
+  </div>
+  <iframe id="toolFrame" title="My tool"></iframe>
+  <details class="card" style="margin-top:14px"><summary>More for this tool</summary>
+    <button class="quiet" data-act="toolUndo" id="toolUndo" style="margin-top:12px">Go back to the version before</button>
+    <button class="quiet" data-act="toolAway">Put this tool away</button>
+    <p class="faint">Putting it away keeps your entries. You can bring it back from Make a new tool.</p>
+  </details>
+</section>
+
 </main>
 
 <nav class="help" aria-label="Help now">
@@ -525,7 +577,7 @@ function blank(){return{name:"Silver Fox",me:"",introDone:false,first:{label:"",
   writing:{title:"",goal:"Finish my book and self-publish it on Kindle",stage:"",step:"",base:"",sessions:[],road:[]},
   about:{anchors:"",triggers:"",words:"",parts:"",goals:""},chosen:{anchors:[]},
   va:{next:"Waiting to hear back from the VA about my next step",when:"",need:"",said:""},basics:{},
-  lastBackup:null,lastQ:-1,lastQDay:"",big:false,doing:null};}
+  lastBackup:null,lastQ:-1,lastQDay:"",big:false,doing:null,tools:[],toolData:{},toolDraft:null};}
 function load(){try{var r=localStorage.getItem(KEY);if(r){var d=JSON.parse(r);var b=blank();Object.keys(b).forEach(function(k){if(d[k]==null)d[k]=b[k];else if(typeof b[k]==="object"&&!Array.isArray(b[k])&&b[k])d[k]=Object.assign({},b[k],d[k]);});return d;}}catch(e){}return blank();}
 var S=load(),saveOK=true;
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));saveOK=true;}catch(e){saveOK=false;toast("This phone wouldn't save that. Use Settings, then Save a copy.");}return saveOK;}
@@ -599,11 +651,11 @@ function runBreath(slot,h){var el=$(slot),n=0;var still=window.matchMedia&&match
 /* ---------- moving between screens ---------- */
 var cur="home",ACT={};
 window.addEventListener("popstate",function(e){go((e.state&&e.state.v)||"home",true);});
-function go(v,fromBack){stopTimers();if(snd&&v!=="red"&&v!=="yellow"&&v!=="practice"){soundOff();drawSound();}
+function go(v,fromBack){stopTimers();if(v!=="tool"){var tf=$("toolFrame");if(tf&&tf.getAttribute("srcdoc"))tf.removeAttribute("srcdoc");}if(snd&&v!=="red"&&v!=="yellow"&&v!=="practice"){soundOff();drawSound();}
   if(!fromBack&&v!==cur){try{history.pushState({v:v},"","#"+v)}catch(e){}}cur=v;
   document.querySelectorAll(".view").forEach(function(x){x.classList.toggle("on",x.id==="v-"+v)});
   document.body.classList.toggle("dim",v==="red");window.scrollTo(0,0);
-  var f={home:drawHome,red:startRed,yellow:startYellow,green:startGreen,writing:drawWriting,wins:drawWins,talk:drawTalk,patterns:drawPatterns,about:drawAbout,va:drawVA,setup:drawSetup,plan:drawPlan}[v];if(f)f();}
+  var f={home:drawHome,red:startRed,yellow:startYellow,green:startGreen,writing:drawWriting,wins:drawWins,talk:drawTalk,patterns:drawPatterns,about:drawAbout,va:drawVA,setup:drawSetup,plan:drawPlan,build:drawBuild,tool:drawTool}[v];if(f)f();}
 document.addEventListener("click",function(e){var b=e.target.closest("[data-go]");if(b){e.preventDefault();go(b.getAttribute("data-go"));return;}var a=e.target.closest("[data-act]");if(a){e.preventDefault();ACT[a.getAttribute("data-act")]();}});
 
 var BASICS=[["ate","Food",'<path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M16 3c-2 1-3 4-3 7h3v11"/>'],["water","Water",'<path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/>'],["slept","Sleep",'<path d="M20 14A8 8 0 1 1 10 4a6 6 0 0 0 10 10z"/>'],["outside","Outside",'<path d="M12 4v2M12 18v2M4 12h2M18 12h2M6.3 6.3l1.4 1.4M16.3 16.3l1.4 1.4M6.3 17.7l1.4-1.4M16.3 7.7l1.4-1.4"/><circle cx="12" cy="12" r="3.5"/>']];
@@ -612,7 +664,7 @@ function fmtDay(iso){var d=new Date(iso+"T12:00:00");return d.toLocaleDateString
 function daysUntil(iso){var d=new Date(iso+"T00:00:00"),n=new Date();n.setHours(0,0,0,0);return Math.round((d-n)/864e5)}
 function wordsThisWeek(){var wk=Date.now()-7*864e5,n=0;S.writing.sessions.forEach(function(x){if(x.t>wk)n+=x.words||0});return n}
 var focusTo="writing";
-function drawHome(){
+function drawHome(){drawToolList();
   $("kitName").textContent=S.name||"Silver Fox";document.title=S.name||"Silver Fox";
   $("ask").textContent="How are you right now"+(S.me?", "+S.me:"")+"?";
   /* today: the one most useful thing, in this order */
@@ -778,6 +830,108 @@ ACT.tCopy=function(){drawTalk();var t=$("tOut"),txt=t.value;
   function ok(){toast("Copied. Now tap 2, Open Gemini.");}
   function fallback(){t.removeAttribute("readonly");t.parentNode.open=true;t.focus();t.select();var good=false;try{good=document.execCommand("copy");}catch(e){}t.setAttribute("readonly","");if(good)ok();else toast("Couldn't copy by itself. Press and hold the text under 'Choose what to share', then Copy.");}
   if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(txt).then(ok,fallback);}else fallback();};
+
+/* ---------- my tools ----------
+   A tool is one HTML file that ChatGPT or Gemini wrote for her. It runs in a frame inside the app.
+   It keeps its entries through fox.load and fox.save, which put them in S.toolData, so the backup
+   copy carries them and nothing leaves the phone. */
+var TOOL_ICON='<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.5-.6-.6-2.5z"/>';
+var toolId=null,toolErrMsg="";
+function toolById(id){for(var i=0;i<S.tools.length;i++)if(S.tools[i].id===id)return S.tools[i];return null}
+function drawToolList(){var on=S.tools.filter(function(t){return t.on});
+  $("toolList").innerHTML=on.length?on.map(function(t){return '<button class="tbtn" data-tool="'+esc(t.id)+'"><i class="ic" aria-hidden="true"><svg viewBox="0 0 24 24">'+TOOL_ICON+'</svg></i><span><b>'+esc(t.name)+'</b>'+(t.about?'<small>'+esc(t.about)+'</small>':'')+'</span><span class="chev" aria-hidden="true">›</span></button>'}).join(""):'<p class="tools-empty">Tools you make with ChatGPT or Gemini show up here.</p>';
+  var d=S.toolDraft,dt=d&&d.edit?toolById(d.edit):null;$("toolResume").hidden=!(d&&d.copied);$("toolResumeWhat").textContent=dt?"changing "+dt.name:"adding your new tool";}
+document.addEventListener("click",function(e){var b=e.target.closest("[data-tool]");if(b){e.preventDefault();toolId=b.getAttribute("data-tool");go("tool");}
+  var r=e.target.closest("[data-back]");if(r){e.preventDefault();var t=toolById(r.getAttribute("data-back"));if(t){t.on=true;said("It's back on your home screen.");drawBuild();}}});
+function copyText(txt,okMsg){var ok=function(){toast(okMsg)};
+  var fb=function(){var t=document.createElement("textarea");t.value=txt;t.setAttribute("readonly","");t.style.position="fixed";t.style.opacity="0";document.body.appendChild(t);t.select();t.setSelectionRange(0,txt.length);var good=false;try{good=document.execCommand("copy")}catch(e){}document.body.removeChild(t);if(good)ok();else toast("It wouldn't copy. Try the button again.");};
+  if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(txt).then(ok,fb);else fb();}
+var BUILD_RULES=["I use a phone app called Silver Fox that lets me add my own tools. Please build the tool I describe at the bottom, and follow these rules exactly.",
+"","HOW TO ANSWER",
+"- Reply with ONE complete HTML file in ONE code block. No canvas, no zip, no separate files, nothing for me to install.",
+"- Put a short, plain name in <title> (for example: Mood tracker) and one plain sentence about what it does in <meta name=\"description\" content=\"...\">.",
+"- Before the code, write one or two short sentences saying what you made. Don't ask me questions first. If something is unclear, make a sensible choice and tell me in one line.",
+"","SAVING MY ENTRIES",
+"- The app gives the tool three helpers. Use only these to keep things:",
+"  fox.load(startingValue) gives back what was saved last time, or startingValue if nothing is saved yet.",
+"  fox.save(value) saves it. The value can be any plain object, list, text or number.",
+"  fox.today() gives today's date as YYYY-MM-DD in my own time zone. Use it for dates instead of toISOString.",
+"- Keep everything the tool remembers in one object, for example: var data = fox.load({ entries: [] }); and call fox.save(data) after every change.",
+"- Don't use localStorage, sessionStorage, cookies, IndexedDB or any other storage.",
+"","PRIVATE AND OFFLINE",
+"- It must work with no internet. Load nothing from the web: no outside scripts, fonts, images or frameworks. Plain JavaScript and CSS inside the one file.",
+"- Never send what I write anywhere. No fetch, no forms that submit, no tracking.",
+"- Don't touch window.parent, window.top or anything outside the file.",
+"","LOOK AND FEEL",
+"- The app already styles plain buttons, inputs, text boxes, labels, headings, tables and anything with class=\"card\". Use plain HTML and keep extra CSS small.",
+"- Leave the page background alone, because the app draws it. Colors you can use: var(--raised) and var(--raised2) cards, var(--ink) text, var(--soft) quieter text, var(--line) borders, var(--act) main buttons, var(--sage) green, var(--amber) yellow, var(--lav) purple, var(--rose) pink-red.",
+"- It's a phone screen about 400 pixels wide. Buttons at least 44 pixels tall, text at least 16px. Don't use vh units, position:fixed or a full-screen layout. The page should just grow as long as it needs.",
+"- Use words, not codes. If a color or symbol means something, write the word beside it.",
+"- Warm, plain, calm wording.",
+"","CHANGING A TOOL I ALREADY HAVE",
+"- If I've pasted a tool's current code below, change only what I ask and keep everything else it does.",
+"- Keep the same fox.load starting value so my saved entries still show up. If you add something new, make sure entries saved before still work.",
+"","WHAT I WANT"].join("\n");
+function buildRequest(){var d=S.toolDraft||{},want=$("bWant").value.trim(),t=d.edit?toolById(d.edit):null,out=BUILD_RULES+"\n"+want;
+  if(t){out+="\n\nTHE CURRENT CODE OF MY TOOL \""+t.name+"\":\n"+t.code;}
+  return out;}
+function draft(){if(!S.toolDraft)S.toolDraft={};return S.toolDraft}
+ACT.buildNew=function(){S.toolDraft={edit:null,want:"",code:"",copied:false};save();go("build");};
+ACT.toolResume=function(){go("build")};
+function drawBuild(){var d=S.toolDraft||(S.toolDraft={edit:null,want:"",code:"",copied:false}),t=d.edit?toolById(d.edit):null;
+  $("bHead").textContent=t?"Change "+t.name:"Make a new tool";
+  $("bLead").textContent=t?"Say what you'd like different. Your request takes the tool's code with it, so ChatGPT changes only what you ask, and your entries stay.":"Tell ChatGPT or Gemini what you want. It writes the tool, and you paste it here. What you write in your tools stays on this phone. ChatGPT only sees what you ask it to make.";
+  $("bWantL").textContent=t?"1. What should change?":"1. What do you want it to do?";
+  $("bAddBtn").textContent=t?"Save the new version":"Add this tool";
+  $("bWant").value=d.want||"";$("bCode").value=d.code||"";$("bMsg").hidden=true;
+  var away=S.tools.filter(function(x){return!x.on});$("awayCard").hidden=!away.length||!!t;
+  $("awayList").innerHTML=away.map(function(x){return '<div class="num"><span>'+esc(x.name)+'</span><a href="#" data-back="'+esc(x.id)+'">Bring back</a></div>'}).join("");}
+$("bWant").addEventListener("input",function(){draft().want=this.value;save();});
+$("bCode").addEventListener("input",function(){draft().code=this.value;save();});
+ACT.bCopy=function(){if(!$("bWant").value.trim()){toast("Write what you want first.");$("bWant").focus();return;}draft().copied=true;save();copyText(buildRequest(),"Copied. Now open ChatGPT and paste it.");};
+/* She may paste ChatGPT's whole answer, words and all, so find the HTML inside it. */
+function pickCode(txt){var best="",re=/```[a-zA-Z]*\s*\n([\s\S]*?)```/g,m;while((m=re.exec(txt)))if(/<[a-z!]/i.test(m[1])&&m[1].length>best.length)best=m[1];
+  if(best)txt=best;var i=txt.search(/<!doctype html|<html/i),j=txt.toLowerCase().lastIndexOf("</html>");
+  if(i>=0)txt=txt.slice(i,j>i?j+7:undefined);return txt.trim();}
+function tagText(code,re){var m=code.match(re);if(!m)return"";var d=document.createElement("textarea");d.innerHTML=m[1];return d.value.trim().slice(0,160);}
+ACT.bAdd=function(){var raw=$("bCode").value,code=pickCode(raw),d=draft(),msg=$("bMsg");
+  if(!/<(script|body|div|form|main|section|h1|h2|button|input|textarea)/i.test(code)){msg.hidden=false;msg.textContent=raw.trim()?"That doesn't look like a tool yet. Go back to ChatGPT, tap Copy on the code it wrote, and paste again. If it's still writing, wait until it finishes.":"Paste ChatGPT's answer in box 4 first.";return;}
+  var name=tagText(code,/<title[^>]*>([\s\S]*?)<\/title>/i)||($("bWant").value.trim().split(/[.\n]/)[0]||"My tool").slice(0,40),
+      about=tagText(code,/<meta\s+name=["']description["']\s+content=["']([^"']*)["']/i);
+  var t=d.edit?toolById(d.edit):null;
+  if(t){t.prev=t.code;t.code=code;t.name=name;t.about=about;t.t=Date.now();}
+  else{t={id:"t"+Date.now().toString(36),name:name,about:about,code:code,prev:null,on:true,t:Date.now()};S.tools.push(t);}
+  S.toolDraft=null;if(!save())return;toolId=t.id;toast(d.edit?"Saved. Here's the new version.":"Added. Here's your new tool.");go("tool");};
+/* The fox helpers a tool gets. Entries are copied in and out so a tool can't reach the app's own data by accident. */
+window.__fox=function(id){return{
+  load:function(start){var v=S.toolData[id];return v===undefined?start:JSON.parse(JSON.stringify(v));},
+  save:function(v){S.toolData[id]=v===undefined?null:JSON.parse(JSON.stringify(v));return save();},
+  today:function(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");},
+  err:function(m){if(cur!=="tool"||id!==toolId)return;toolErrMsg=String(m).slice(0,600);$("toolErr").hidden=false;},
+  height:function(px){var f=$("toolFrame");if(f&&px>0)f.style.height=Math.min(px+24,30000)+"px";}};};
+var TOOL_CSS=":root{--ground:#20131a;--raised:#33212a;--raised2:#402b34;--line:#5a3d47;--ink:#f7ebdc;--soft:#d6c3cf;--faint:#c4b0bf;--act:#93264c;--act-ink:#fff4ea;--act-edge:#d0577f;--sage:#a9c9a0;--wood:#9a6e52;--amber:#f3b765;--lav:#b9a6ea;--rose:#e0708f}"+
+ "*{box-sizing:border-box}html,body{margin:0;background:transparent!important;color:var(--ink);font:17px/1.5 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;-webkit-text-size-adjust:100%}body{padding:2px 1px 20px}"+
+ "h1,h2,h3{font-family:Georgia,'Noto Serif',serif;font-weight:normal;line-height:1.25;margin:0 0 10px}h1{font-size:26px}h2{font-size:22px}h3{font-size:19px}p{margin:0 0 12px}"+
+ "button{font:inherit;font-size:17px;color:var(--act-ink);background:var(--act);border:1px solid var(--act-edge);border-radius:14px;padding:8px 12px;min-height:44px;cursor:pointer}"+
+ "input,textarea,select{font:inherit;font-size:17px;width:100%;background:var(--raised2);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:11px}"+
+ "input[type=checkbox],input[type=radio],input[type=range],input[type=color]{width:auto;accent-color:var(--act-edge)}textarea{min-height:110px}"+
+ "label{display:block;color:var(--soft);font-size:15px;margin:12px 0 6px}a{color:var(--amber)}.card{background:var(--raised);border-radius:18px;padding:18px;margin:0 0 12px}"+
+ "table{border-collapse:collapse;width:100%}th,td{padding:6px;border-bottom:1px solid var(--line);text-align:left}";
+function toolDoc(t){
+  var head="<meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><style>"+TOOL_CSS+"</style><script>(function(){var F=parent.__fox(\""+t.id+"\");window.fox={load:F.load,save:F.save,today:F.today};"+
+    "window.onerror=function(m,s,l){F.err(m+(l?\" (line \"+l+\")\":\"\"));};window.addEventListener(\"unhandledrejection\",function(e){F.err(String(e.reason));});"+
+    "var last=0;function h(){var n=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0);if(n!==last){last=n;F.height(n);}}"+
+    "addEventListener(\"load\",h);setInterval(h,600);})();<\/script>",code=t.code;
+  if(/<head[^>]*>/i.test(code))return code.replace(/<head[^>]*>/i,function(m){return m+head});
+  if(/<html[^>]*>/i.test(code))return code.replace(/<html[^>]*>/i,function(m){return m+"<head>"+head+"</head>"});
+  return "<!doctype html><html><head>"+head+"</head><body>"+code+"</body></html>";}
+function drawTool(){var t=toolById(toolId);if(!t){go("home");return;}
+  $("toolErr").hidden=true;toolErrMsg="";$("toolUndo").hidden=!t.prev;
+  var f=$("toolFrame");f.style.height="";f.title=t.name;f.setAttribute("srcdoc",toolDoc(t));}
+ACT.toolChange=function(){S.toolDraft={edit:toolId,want:"",code:"",copied:false};save();go("build");};
+ACT.toolFix=function(){var t=toolById(toolId);if(!t)return;S.toolDraft={edit:toolId,want:"It shows this problem, please fix it: "+toolErrMsg,code:"",copied:false};save();go("build");};
+ACT.toolUndo=function(){var t=toolById(toolId);if(!t||!t.prev)return;var c=t.code;t.code=t.prev;t.prev=c;t.name=tagText(t.code,/<title[^>]*>([\s\S]*?)<\/title>/i)||t.name;t.about=tagText(t.code,/<meta\s+name=["']description["']\s+content=["']([^"']*)["']/i);said("Back to the version before. Tap it again to switch back.");drawTool();};
+ACT.toolAway=function(){var t=toolById(toolId);if(!t)return;t.on=false;said("Put away. Your entries are kept.");go("home");};
 
 /* ---------- settings ---------- */
 var cFor=[];
